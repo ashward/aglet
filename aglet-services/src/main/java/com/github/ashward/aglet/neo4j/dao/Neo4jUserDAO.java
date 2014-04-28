@@ -1,13 +1,13 @@
-package com.github.ashward.aglet.services.impl.neo4j;
+package com.github.ashward.aglet.neo4j.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.ashward.aglet.dao.UserDAO;
 import com.github.ashward.aglet.model.User;
-import com.github.ashward.aglet.model.impl.neo4j.Neo4jUser;
+import com.github.ashward.aglet.neo4j.model.Neo4jUser;
 import com.github.ashward.aglet.neo4j.repository.UserRepository;
-import com.github.ashward.aglet.services.UserService;
 
-public class Neo4jUserService implements UserService {
+public class Neo4jUserDAO implements UserDAO {
 
 	@Autowired
 	UserRepository userRepository;
@@ -20,5 +20,4 @@ public class Neo4jUserService implements UserService {
 	public User createNew(String username) {
 		return Neo4jUser.create(username);
 	}
-
 }

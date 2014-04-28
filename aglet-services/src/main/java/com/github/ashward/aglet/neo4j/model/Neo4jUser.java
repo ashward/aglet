@@ -1,4 +1,4 @@
-package com.github.ashward.aglet.model.impl.neo4j;
+package com.github.ashward.aglet.neo4j.model;
 
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
@@ -14,7 +14,7 @@ import com.github.ashward.aglet.model.User;
 @NodeEntity
 public class Neo4jUser implements User {
 	@GraphId
-	private long graphId;
+	private Long graphId;
 
 	/**
 	 * The username
