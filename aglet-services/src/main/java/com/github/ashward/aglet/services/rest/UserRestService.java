@@ -10,7 +10,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,17 +23,21 @@ import com.github.ashward.aglet.model.User;
 import com.github.ashward.aglet.services.UserService;
 
 @Path("users")
+@Component
 public class UserRestService {
-	@Autowired
+	private Logger log = Logger.getLogger(UserRestService.class);
+	
+	@Autowired(required=true)
 	private UserDAO userDAO;
 
-	@Autowired
+	@Autowired(required=true)
 	private UserService userService;
 
 	@GET
 	@Path("{username}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User get(@PathParam("username") final String username) {
+		log.debug(userDAO);
 		return userDAO.findUserByUsername(username);
 	}
 

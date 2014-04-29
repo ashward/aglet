@@ -9,7 +9,7 @@
 	   http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 	<context:annotation-config />
-	<context:spring-configured />
+	<context:component-scan base-package="com.github.ashward.aglet"/>
 
 	<bean id="graphDbFactory" class="org.neo4j.graphdb.factory.GraphDatabaseFactory" />
 	<bean id="graphDatabaseService" scope="singleton" destroy-method="shutdown"
@@ -20,6 +20,4 @@
 	<neo4j:config graphDatabaseService="graphDatabaseService"
 		base-package="com.github.ashward.aglet.neo4j.model" />
 	<neo4j:repositories base-package="com.github.ashward.aglet.neo4j.repository" />
-
-	<bean id="UserDAO" class="com.github.ashward.aglet.neo4j.dao.Neo4jUserDAO"></bean>
 </beans>
