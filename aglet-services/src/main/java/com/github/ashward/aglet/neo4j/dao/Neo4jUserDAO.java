@@ -1,9 +1,7 @@
 package com.github.ashward.aglet.neo4j.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Persistent;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import com.github.ashward.aglet.dao.UserDAO;
 import com.github.ashward.aglet.model.User;
@@ -16,8 +14,16 @@ public class Neo4jUserDAO implements UserDAO {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Override
 	public User findUserByUsername(String username) {
 		return userRepository.findBySchemaPropertyValue("username", username);
+	}
+	
+	@Override
+	public void save(final User user) {
+		if(user instanceof Neo4jUser) {
+			userRepository.save((Neo4jUser) user);
+		}
 	}
 
 	@Override
