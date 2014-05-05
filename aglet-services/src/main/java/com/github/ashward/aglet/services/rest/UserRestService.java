@@ -14,12 +14,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.ashward.aglet.dao.UserDAO;
 import com.github.ashward.aglet.model.User;
 import com.github.ashward.aglet.services.UserService;
@@ -35,10 +35,6 @@ public class UserRestService {
 	@Autowired(required=true)
 	private UserService userService;
 
-	public UserRestService(){
-		log.debug("Sharks with fricking laser beams");
-	}
-	
 	@GET
 	@Path("{username}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -62,7 +58,7 @@ public class UserRestService {
 
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectReader reader = mapper.readerForUpdating(user);
-		reader.readTree(json);
+		reader.withView(User.class).readValue(json);
 		
 		userDAO.save(user);
 		

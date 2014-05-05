@@ -7,7 +7,8 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import com.github.ashward.aglet.model.User;
 
 /**
- * Represents a user of the system
+ * Represents a user of the system backed by a Neo4j
+ * data store
  * 
  * @author ash
  */
