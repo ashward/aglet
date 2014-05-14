@@ -60,8 +60,12 @@ public class UserRestService {
 		ObjectReader reader = mapper.readerForUpdating(user);
 		reader.withView(User.class).readValue(json);
 		
-		userDAO.save(user);
+		if(user.getUsername().equals(username)) {
+			userDAO.save(user);
+			
+			return true;
+		}
 		
-		return true;
+		return false;
 	}
 }

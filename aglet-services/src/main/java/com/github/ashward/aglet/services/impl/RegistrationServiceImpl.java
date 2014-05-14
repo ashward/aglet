@@ -1,12 +1,16 @@
 package com.github.ashward.aglet.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.github.ashward.aglet.dao.LocalAccountDAO;
 import com.github.ashward.aglet.dao.UserDAO;
+import com.github.ashward.aglet.model.LocalAccount;
 import com.github.ashward.aglet.model.User;
 import com.github.ashward.aglet.services.RegistrationService;
 
@@ -16,10 +20,15 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Autowired
 	private UserDAO userDAO;
 	
+	@Autowired
+	private LocalAccountDAO accountDAO;
+
 	@Override
-	public User register(Map<String, String> data) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public User register(Registration registration) {
+		userDAO.save(registration.getUser());
+		accountDAO.save(registration.getAccount());
+		return registration.getUser();
 	}
 
 	@Override
@@ -30,8 +39,18 @@ public class RegistrationServiceImpl implements RegistrationService {
 			
 			@Override
 			public List<String> getSuggestions() {
+				if(user == null) {
+					return null;
+				}
+				
 				// TODO Auto-generated method stub
-				return null;
+				return new ArrayList<String>() {{
+					add(user.getUsername() + "1" );
+					add(user.getUsername() + "2" );
+					add(user.getUsername() + "3" );
+					add(user.getUsername() + "cholmondleywarner" );
+				}};
+				
 			}
 			
 			@Override
@@ -43,4 +62,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return result;
 	}
 
+	@Override
+	public LocalAccount createLocalAccount(final User associatedUser) {
+		return accountDAO.createNew(associatedUser);
+	}
 }

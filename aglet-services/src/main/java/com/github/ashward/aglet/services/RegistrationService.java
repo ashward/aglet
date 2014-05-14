@@ -3,6 +3,8 @@ package com.github.ashward.aglet.services;
 import java.util.List;
 import java.util.Map;
 
+import com.github.ashward.aglet.model.Account;
+import com.github.ashward.aglet.model.LocalAccount;
 import com.github.ashward.aglet.model.User;
 
 public interface RegistrationService {
@@ -11,7 +13,14 @@ public interface RegistrationService {
 		List<String> getSuggestions();
 	}
 	
+	public interface Registration {
+		User getUser();
+		LocalAccount getAccount();
+	}
+	
 	UsernameCheckResult checkUsername(String username);
 	
-	User register(Map<String,String> data); 
+	User register(Registration registration);
+	
+	LocalAccount createLocalAccount(User associatedUSer);
 }

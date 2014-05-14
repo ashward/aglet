@@ -18,7 +18,7 @@
 	</bean>
 
 	<neo4j:config graphDatabaseService="graphDatabaseService"
-		base-package="com.github.ashward.aglet.neo4j.model" />
+		base-package="com.github.ashward.aglet.model" />
 	<neo4j:repositories base-package="com.github.ashward.aglet.neo4j.repository" />
 
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.github.ashward.aglet.dao.UserDAO;
 import com.github.ashward.aglet.model.User;
-import com.github.ashward.aglet.neo4j.model.Neo4jUser;
 import com.github.ashward.aglet.neo4j.repository.UserRepository;
 
 @Repository
@@ -21,13 +20,11 @@ public class Neo4jUserDAO implements UserDAO {
 	
 	@Override
 	public void save(final User user) {
-		if(user instanceof Neo4jUser) {
-			userRepository.save((Neo4jUser) user);
-		}
+		userRepository.save(user);
 	}
 
 	@Override
 	public User createNew(String username) {
-		return Neo4jUser.create(username);
+		return new User(username);
 	}
 }
