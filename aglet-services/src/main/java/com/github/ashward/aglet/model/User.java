@@ -1,8 +1,12 @@
 package com.github.ashward.aglet.model;
 
+import java.util.Iterator;
+
+import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
 /**
  * Represents a user of the system backed by a Neo4j
@@ -15,6 +19,9 @@ public class User {
 	@GraphId
 	private Long graphId;
 
+	@RelatedTo(type="BELONGS_TO", direction=Direction.INCOMING)
+	private LocalAccount localAccount;
+	
 	/**
 	 * The username
 	 */
@@ -40,5 +47,9 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public LocalAccount getLocalAccount() {
+		return localAccount;
 	}
 }
