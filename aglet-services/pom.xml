@@ -108,11 +108,6 @@
 			<version>1.9</version>
 		</dependency>
 		<dependency>
-			<groupId>com.googlecode.jsontoken</groupId>
-			<artifactId>jsontoken</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
@@ -121,6 +116,11 @@
 			<groupId>org.kubek2k</groupId>
 			<artifactId>springockito-annotations</artifactId>
 			<version>1.0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.jsontoken</groupId>
+			<artifactId>jsontoken</artifactId>
+			<version>1.1</version>
 		</dependency>
 	</dependencies>
 	<build>

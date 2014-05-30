@@ -41,17 +41,17 @@ public class RegistrationServiceImplTest {
 		// With a new account
 		final LocalAccount account = new LocalAccount(user);
 		
+		account.setPassword("password");
+		
 		Registration registration = new Registration() {
 			
 			@Override
 			public User getUser() {
-				// TODO Auto-generated method stub
 				return user;
 			}
 			
 			@Override
 			public LocalAccount getAccount() {
-				// TODO Auto-generated method stub
 				return account;
 			}
 		};
@@ -61,7 +61,14 @@ public class RegistrationServiceImplTest {
 //		verify(userDAO).save(user);
 //		verify(accountDAO).save(account);
 		
-		assertEquals("", account, user.getLocalAccount());
+		assertEquals(account, user.getLocalAccount());
+		assertEquals(user, account.getAssociatedUser());
+		
+		User user2 = userDAO.findUserByUsername("test");
+		assertEquals("", user, user2);
+		
+		LocalAccount account2 = user2.getLocalAccount();
+		assertEquals("", account, account2);
 	}
 
 	@Test @Ignore

@@ -2,7 +2,6 @@ package com.github.ashward.aglet.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +24,14 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 	@Override
 	@Transactional
-	public User register(Registration registration) {
-		userDAO.save(registration.getUser());
-		accountDAO.save(registration.getAccount());
-		return registration.getUser();
+	public User register(final Registration registration) {
+		User user = registration.getUser();
+		LocalAccount account = registration.getAccount();		
+		userDAO.save(user);
+		accountDAO.save(account);
+		user.setLocalAccount(account);
+		userDAO.save(user);
+		return user;
 	}
 
 	@Override

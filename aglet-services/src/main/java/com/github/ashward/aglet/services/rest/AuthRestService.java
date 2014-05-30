@@ -6,42 +6,40 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.github.ashward.aglet.dao.LocalAccountDAO;
-import com.github.ashward.aglet.model.LocalAccount;
-import com.github.ashward.aglet.model.User;
-import com.github.ashward.aglet.services.UserService;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.ashward.aglet.services.AuthService;
 
 @Service
 @Path("auth")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthRestService {
+	private static Logger log = Logger.getLogger(AuthRestService.class);
+
 	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private LocalAccountDAO localAccountDAO;
-	
+	private AuthService authService;
+
 	@Path("login")
 	@POST
-	public String login(JsonNode json) {
+	public JsonNode login(JsonNode json) {
 		String username = json.get("username").textValue();
 		String password = json.get("password").textValue();
 
-		User user = userService.findUserByUsername(username);
-		
-		if(user != null) {
-			LocalAccount account = user.getLocalAccount();
-			
-			if(account != null && account.checkPassword(password)) {
-				return "Yay";
-			}
+		if (log.isTraceEnabled()) {
+			log.trace("Found username '" + username + "'");
 		}
-		
-		return "Nay";
+
+		String token = authService.authenticateLocalAccount(username, password);
+
+		ObjectNode result = JsonNodeFactory.instance.objectNode();
+		result.put("authenticated", token != null);
+		result.put("token",  token);
+		return result;
 	}
 }
