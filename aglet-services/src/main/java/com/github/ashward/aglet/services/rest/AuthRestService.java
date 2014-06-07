@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.ashward.aglet.auth.AuthenticationNotRequired;
 import com.github.ashward.aglet.services.AuthService;
 
 @Service
@@ -27,6 +28,7 @@ public class AuthRestService {
 
 	@Path("login")
 	@POST
+	@AuthenticationNotRequired
 	public JsonNode login(JsonNode json) {
 		String username = json.get("username").textValue();
 		String password = json.get("password").textValue();

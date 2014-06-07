@@ -22,11 +22,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import com.github.ashward.aglet.auth.AuthenticationNotRequired;
 import com.github.ashward.aglet.model.LocalAccount;
 import com.github.ashward.aglet.model.User;
 import com.github.ashward.aglet.services.RegistrationService;
 import com.github.ashward.aglet.services.RegistrationService.Registration;
-import com.github.ashward.aglet.services.RegistrationService.UsernameCheckResult;
 import com.github.ashward.aglet.services.UserService;
 
 @Service
@@ -44,6 +44,7 @@ public class RegistrationRestService {
 
 	@GET
 	@Path("usernameExists")
+	@AuthenticationNotRequired
 	public void getUsernameExists(
 			@QueryParam("username") final String username,
 			@Suspended final AsyncResponse response) {
@@ -67,6 +68,7 @@ public class RegistrationRestService {
 
 	@POST
 	@Path("register")
+	@AuthenticationNotRequired
 	public User register(final String json) throws JsonProcessingException, IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
 
